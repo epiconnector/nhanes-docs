@@ -39,10 +39,10 @@ for details.
 
 NHANES makes a large volume of data available for download. However,
 rather than a single download, these data are made available as a
-number of separate SAS transport files, referred to as "data files",
-for each cycle. Each such data file contains records for several
-related variables. A comprehensive list of data files available for
-download is available
+number of separate SAS transport files, referred to as "data files" in
+the NHANES ecosystem, for each cycle. Each such data file or table contains
+records for several related variables. A comprehensive _manifest_ of data
+files available for download is available
 [here](https://wwwn.cdc.gov/Nchs/Nhanes/search/DataPage.aspx), along with
 subsets broken up into the following "components": 
 [Demographics](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics),
@@ -51,14 +51,14 @@ subsets broken up into the following "components":
 [Laboratory](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Laboratory), and
 [Questionnaire](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Questionnaire).
 
-For each data file listed in these tables, a link to a Doc File (which
+For each data table listed in these manifests, a link to a "Doc File" (which
 is an HTML webpage describing the data file) and a link to a SAS
 transport file is provided. An additional list of limited access data
 files are documented
 [here](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=LimitedAccess),
-but the corresponding data file download links are not available.
+but the corresponding data file download links are [not available](https://www.cdc.gov/rdc/index.htm).
 
-A table of _variables_ is separately available for each component, and
+An additional manifest of _variables_ is separately available for each component, and
 gives more detailed information about both the variables and the data
 files they are recorded in, although these tables do not provide
 download links directly: 
@@ -79,7 +79,7 @@ convert these files to CSV files.
 
 # Public-use data: R resources
 
-One of the goals of the Epiconductor project is to provide and
+One of the goals of the Epiconnector project is to provide and
 document an alternative access path to NHANES data and documentation
 _via_ the R ecosystem. It builds on the
 [__nhanesA__](https://cran.r-project.org/package=nhanesA) R package,
@@ -279,16 +279,87 @@ tibble [10,122 × 10] (S3: tbl_df/tbl/data.frame)
 ```
 
 Further analysis can be performed on these resulting datasets which
-are regular R data frames.
+are regular R data frames. Simple examples of such analyses, and other
+functionality in the __nhanesA__ package such as search utilities are
+described in [Ale et al, 2024](https://doi.org/10.1093/database/baae028).
 
-Other tools that make it easier to work with these datasets by
-creating a local database, or creating a search interface, are
-described elsewhere. We conclude this document with a brief look at
-how frequently NHANES data files are published and / or updated, based
-on the information contained in the table manifest.
+## Limitations of this approach
+
+The __nhanesA__ package is designed to access NHANES data on demand
+from the CDC website. The efficiency of such an approach is naturally
+limited by available bandwidth. Another limitation that is not obvious
+at first glance is apparent when we try to combine data across
+multiple cycles. Not all variables are measured in all cycles, and
+even when they are, they may not be included in the same tables (and
+sometimes they are included in multiple tables). Analyzing the
+availability of variables of interest is difficult with the
+rudimentary search facilities available on the NHANES website.
+
+Another subtle issue that is important from the perspective of
+reproducible research is the possibility of data updates (see
+below). NHANES is an ongoing program, so new datasets are released on
+a regular basis. More importantly from a reproducibility angle,
+previously released datasets are sometimes updated. Older versions are
+not retained on the NHANES website. This means that an analysis
+performed on a given date may be impossible to recreate on a later
+date, unless the relevant data sets have been retained.
+
+# Efficient and and reproducible analyses of NHANES data
+
+To address these limitations, we have developed several tools, each
+building on the previous ones, to create a user-friendly platform for
+analysts who are comfortable with R as a data analysis
+platform. Briefly, 
+
+- The [__cachehttp__](https://github.com/ccb-hms/cachehttp) package
+  enables local cacheing of NHANES data and documentation files that
+  are only re-downloaded if they have been updated.
+
+- The [nhanes-snapshot](https://github.com/deepayan/nhanes-snapshot)
+  repository is used to download and periodically update raw data (as
+  compressed CSV files) and documentation (as HTML files) with
+  timestamps, so that they can serve as a snapshot of NHANES data
+  available on specific dates.
+
+- The [nhanes-postgres](https://github.com/deepayan/nhanes-postgres)
+  repository uses these snapshots to populate a
+  [Postgresql](https://www.postgresql.org/) database inside a
+  [Docker](https://www.docker.com/) container.
+  
+- The [__nhanesA__](https://github.com/cjendres1/nhanes) package has
+  been modified to recognize the database when it is avilable, and use
+  it as an alternative data source for both data and documentation,
+  bypassing the NHANES website. Using __nhanesA__ in this mode leads
+  to speedup of several orders of magnitude while requiring almost no
+  change in user code.
+
+- The [__phonto__](https://github.com/ainilaha/phonto) package
+  provides more advanced analysis tools that take advantage of the
+  local database.
+
+The easiest way to get started with these tools is to run the
+[nhanes-postgres](https://github.com/deepayan/nhanes-postgres) docker
+image as described in the
+[README](https://github.com/deepayan/nhanes-postgres/blob/main/README.md). In
+addition to the Postgresql database, the container includes R and
+RStudio Server along with versions of __nhanesA__ and __phonto__
+configured to use the database. Once the included instance of RStudio
+Server is accessed through a browser, one can use it as a regular R
+session without the need to explicitly interact with the backend
+database in any way. This is not, however, the only way, and advanced
+users may prefer to use only the database from the container,
+accessing it from outside via port forwarding.
+
+Other articles on this site describe more detailed examples of
+analyses using these tools, as well as other checks and utilities that
+help with such analyses.
 
 
-## Frequency of NHANES data releases
+# Frequency of NHANES data releases
+
+We conclude this document with a brief look at how frequently NHANES
+data files are published and / or updated, based on the information
+contained in the table manifest.
 
 Recall from above that the NHANES table manifest includes a
 `Date.Published` column.  This allows us to tabulate NHANES data
@@ -593,5 +664,12 @@ interaction(month, year, sep = "-") FALSE TRUE
                      September-2024    55    0
                      October-2024       8    0
 ```
+
+# References
+
+Laha Ale, Robert Gentleman, Teresa Filshtein Sonmez, Deepayan Sarkar,
+Christopher Endres (2024). nhanesA: achieving transparency and
+reproducibility in NHANES research. _Database_, Volume 2024, baae028,
+<https://doi.org/10.1093/database/baae028>
 
 
