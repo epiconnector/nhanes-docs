@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Continuous NHANES"
+title: "Introduction"
 author: "Deepayan Sarkar"
 editor_options: 
   chunk_output_type: console
