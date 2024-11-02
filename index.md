@@ -6,7 +6,7 @@ title: Understanding and Analyzing NHANES Data
 
 - [Quick Start](vignettes/quick_start.html)
 
-- [Introduction to Continuous NHANES](vignettes/nhanes-introduction.html)
+- [Introduction](vignettes/nhanes-introduction.html)
 
 - [Accessing NHANES Data Locally](vignettes/nhanes-local.html)
 

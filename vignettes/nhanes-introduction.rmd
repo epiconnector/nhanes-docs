@@ -45,7 +45,8 @@ substantial amount of consistency, making it possible to compare data
 across cycles.  Sampling weights are provided along with demographic
 details for each participant; see the NHANES [analytic
 guidelines](https://wwwn.cdc.gov/nchs/nhanes/analyticguidelines.aspx)
-for details.
+for details. NHANES is a rich resource that has been used extensively
+in epidemiological research.
 
 
 # Public-use data: web resources
@@ -139,7 +140,8 @@ the table name, in which case the relevant URL is constructed from
 it. For example,
 
 ```{r}
-demo_b <- nhanesFromURL("/Nchs/Nhanes/2001-2002/DEMO_B.XPT", translated = FALSE)
+demo_b <- nhanesFromURL("/Nchs/Nhanes/2001-2002/DEMO_B.XPT",
+                        translated = FALSE)
 demo_c <- nhanes("DEMO_C", translated = FALSE)
 ```
 
@@ -169,7 +171,7 @@ str(demo_c[1:10])
 
 Further analysis can be performed on these resulting datasets which
 are regular R data frames. Simple examples of such analyses, and other
-functionality in the __nhanesA__ package such as search utilities are
+functionality in the __nhanesA__ package such as search utilities, are
 described in [Ale et al, 2024](https://doi.org/10.1093/database/baae028).
 
 ## Limitations of this approach
@@ -254,7 +256,7 @@ Recall from above that the NHANES table manifest includes a
 `Date.Published` column.  This allows us to tabulate NHANES data
 release dates. We expect that bulk releases of tables happen all
 together, generally in two year intervals, while some tables may be
-released or updated on a as-needed basis.
+released or updated on an as-needed basis.
 
 The release information (available by month of release) can be
 summarized by tabulating the `Date.Published` field:
@@ -307,11 +309,18 @@ pubfreq0 <- pubfreq[rowSums(pubfreq) > 0, , drop = FALSE]
 pubfreq0
 ```
 
+# Session information
+
+```{r}
+sessionInfo()
+```
+
+
 # References
 
-Laha Ale, Robert Gentleman, Teresa Filshtein Sonmez, Deepayan Sarkar,
-Christopher Endres (2024). nhanesA: achieving transparency and
-reproducibility in NHANES research. _Database_, Volume 2024, baae028,
-<https://doi.org/10.1093/database/baae028>
+* Laha Ale, Robert Gentleman, Teresa Filshtein Sonmez, Deepayan
+  Sarkar, Christopher Endres (2024). nhanesA: achieving transparency
+  and reproducibility in NHANES research. _Database_, Volume 2024,
+  baae028, <https://doi.org/10.1093/database/baae028>
 
 

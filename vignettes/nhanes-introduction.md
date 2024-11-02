@@ -32,7 +32,8 @@ substantial amount of consistency, making it possible to compare data
 across cycles.  Sampling weights are provided along with demographic
 details for each participant; see the NHANES [analytic
 guidelines](https://wwwn.cdc.gov/nchs/nhanes/analyticguidelines.aspx)
-for details.
+for details. NHANES is a rich resource that has been used extensively
+in epidemiological research.
 
 
 # Public-use data: web resources
@@ -122,30 +123,30 @@ subset(manifest, startsWith(Table, "DEMO"))
 ```
 
 ```
-     Table                            DocURL                           DataURL     Years
-368   DEMO   /Nchs/Nhanes/1999-2000/DEMO.htm   /Nchs/Nhanes/1999-2000/DEMO.XPT 1999-2000
-367 DEMO_B /Nchs/Nhanes/2001-2002/DEMO_B.htm /Nchs/Nhanes/2001-2002/DEMO_B.XPT 2001-2002
-366 DEMO_C /Nchs/Nhanes/2003-2004/DEMO_C.htm /Nchs/Nhanes/2003-2004/DEMO_C.XPT 2003-2004
-364 DEMO_D /Nchs/Nhanes/2005-2006/DEMO_D.htm /Nchs/Nhanes/2005-2006/DEMO_D.XPT 2005-2006
-365 DEMO_E /Nchs/Nhanes/2007-2008/DEMO_E.htm /Nchs/Nhanes/2007-2008/DEMO_E.XPT 2007-2008
-369 DEMO_F /Nchs/Nhanes/2009-2010/DEMO_F.htm /Nchs/Nhanes/2009-2010/DEMO_F.XPT 2009-2010
-370 DEMO_G /Nchs/Nhanes/2011-2012/DEMO_G.htm /Nchs/Nhanes/2011-2012/DEMO_G.XPT 2011-2012
-371 DEMO_H /Nchs/Nhanes/2013-2014/DEMO_H.htm /Nchs/Nhanes/2013-2014/DEMO_H.XPT 2013-2014
-372 DEMO_I /Nchs/Nhanes/2015-2016/DEMO_I.htm /Nchs/Nhanes/2015-2016/DEMO_I.XPT 2015-2016
-373 DEMO_J /Nchs/Nhanes/2017-2018/DEMO_J.htm /Nchs/Nhanes/2017-2018/DEMO_J.XPT 2017-2018
-375 DEMO_L /Nchs/Nhanes/2021-2022/DEMO_L.htm /Nchs/Nhanes/2021-2022/DEMO_L.XPT 2021-2023
-            Date.Published
-368 Updated September 2009
-367 Updated September 2009
-366 Updated September 2009
-364 Updated September 2009
-365         September 2009
-369         September 2011
-370   Updated January 2015
-371           October 2015
-372         September 2017
-373          February 2020
-375         September 2024
+     Table                            DocURL                           DataURL
+368   DEMO   /Nchs/Nhanes/1999-2000/DEMO.htm   /Nchs/Nhanes/1999-2000/DEMO.XPT
+367 DEMO_B /Nchs/Nhanes/2001-2002/DEMO_B.htm /Nchs/Nhanes/2001-2002/DEMO_B.XPT
+366 DEMO_C /Nchs/Nhanes/2003-2004/DEMO_C.htm /Nchs/Nhanes/2003-2004/DEMO_C.XPT
+364 DEMO_D /Nchs/Nhanes/2005-2006/DEMO_D.htm /Nchs/Nhanes/2005-2006/DEMO_D.XPT
+365 DEMO_E /Nchs/Nhanes/2007-2008/DEMO_E.htm /Nchs/Nhanes/2007-2008/DEMO_E.XPT
+369 DEMO_F /Nchs/Nhanes/2009-2010/DEMO_F.htm /Nchs/Nhanes/2009-2010/DEMO_F.XPT
+370 DEMO_G /Nchs/Nhanes/2011-2012/DEMO_G.htm /Nchs/Nhanes/2011-2012/DEMO_G.XPT
+371 DEMO_H /Nchs/Nhanes/2013-2014/DEMO_H.htm /Nchs/Nhanes/2013-2014/DEMO_H.XPT
+372 DEMO_I /Nchs/Nhanes/2015-2016/DEMO_I.htm /Nchs/Nhanes/2015-2016/DEMO_I.XPT
+373 DEMO_J /Nchs/Nhanes/2017-2018/DEMO_J.htm /Nchs/Nhanes/2017-2018/DEMO_J.XPT
+375 DEMO_L /Nchs/Nhanes/2021-2022/DEMO_L.htm /Nchs/Nhanes/2021-2022/DEMO_L.XPT
+        Years         Date.Published
+368 1999-2000 Updated September 2009
+367 2001-2002 Updated September 2009
+366 2003-2004 Updated September 2009
+364 2005-2006 Updated September 2009
+365 2007-2008         September 2009
+369 2009-2010         September 2011
+370 2011-2012   Updated January 2015
+371 2013-2014           October 2015
+372 2015-2016         September 2017
+373 2017-2018          February 2020
+375 2021-2023         September 2024
 ```
 
 The __nhanesA__ package allows both data and documentation files to be
@@ -155,7 +156,8 @@ it. For example,
 
 
 ```r
-demo_b <- nhanesFromURL("/Nchs/Nhanes/2001-2002/DEMO_B.XPT", translated = FALSE)
+demo_b <- nhanesFromURL("/Nchs/Nhanes/2001-2002/DEMO_B.XPT",
+                        translated = FALSE)
 demo_c <- nhanes("DEMO_C", translated = FALSE)
 ```
 
@@ -222,11 +224,11 @@ $`Target:`
 
 $RIDSTATR
 # A tibble: 3 × 5
-  `Code or Value` `Value Description`               Count Cumulative `Skip to Item`
-  <chr>           <chr>                             <int>      <int> <lgl>         
-1 1               Interviewed Only                    562        562 NA            
-2 2               Both Interviewed and MEC examined 10477      11039 NA            
-3 .               Missing                               0      11039 NA            
+  `Code or Value` `Value Description`            Count Cumulative `Skip to Item`
+  <chr>           <chr>                          <int>      <int> <lgl>         
+1 1               Interviewed Only                 562        562 NA            
+2 2               Both Interviewed and MEC exam… 10477      11039 NA            
+3 .               Missing                            0      11039 NA            
 ```
 
 ```r
@@ -280,7 +282,7 @@ tibble [10,122 × 10] (S3: tbl_df/tbl/data.frame)
 
 Further analysis can be performed on these resulting datasets which
 are regular R data frames. Simple examples of such analyses, and other
-functionality in the __nhanesA__ package such as search utilities are
+functionality in the __nhanesA__ package such as search utilities, are
 described in [Ale et al, 2024](https://doi.org/10.1093/database/baae028).
 
 ## Limitations of this approach
@@ -365,7 +367,7 @@ Recall from above that the NHANES table manifest includes a
 `Date.Published` column.  This allows us to tabulate NHANES data
 release dates. We expect that bulk releases of tables happen all
 together, generally in two year intervals, while some tables may be
-released or updated on a as-needed basis.
+released or updated on an as-needed basis.
 
 The release information (available by month of release) can be
 summarized by tabulating the `Date.Published` field:
@@ -376,16 +378,20 @@ xtabs(~ Date.Published, manifest) |> sort() |> tail(20)
 
 ```
 Date.Published
-        December 2007             July 2010             June 2020  Updated October 2014 
-                   13                    13                    13                    14 
-            July 2022           August 2021         December 2018         November 2007 
-                   15                    17                    17                    17 
-        November 2021 Updated November 2020              May 2004             June 2002 
-                   18                    19                    21                    34 
-       September 2011          October 2015        September 2013        September 2017 
-                   37                    38                    38                    40 
-       September 2009         February 2020        September 2024    Updated April 2022 
-                   41                    48                    55                    59 
+        December 2007             July 2010             June 2020 
+                   13                    13                    13 
+ Updated October 2014             July 2022           August 2021 
+                   14                    15                    17 
+        December 2018         November 2007         November 2021 
+                   17                    17                    18 
+Updated November 2020              May 2004             June 2002 
+                   19                    21                    34 
+       September 2011          October 2015        September 2013 
+                   37                    38                    38 
+       September 2017        September 2009         February 2020 
+                   40                    41                    48 
+       September 2024    Updated April 2022 
+                   55                    59 
 ```
 
 Parsing these dates systematically, we get
@@ -665,11 +671,69 @@ interaction(month, year, sep = "-") FALSE TRUE
                      October-2024       8    0
 ```
 
+# Session information
+
+
+```r
+sessionInfo()
+```
+
+```
+R Under development (unstable) (2024-07-12 r86893)
+Platform: x86_64-pc-linux-gnu
+Running under: Debian GNU/Linux 12 (bookworm)
+
+Matrix products: default
+BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.21.so;  LAPACK version 3.11.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+time zone: Asia/Kolkata
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] nhanesA_1.1.4    kableExtra_1.4.0 lattice_0.22-6   knitr_1.45      
+
+loaded via a namespace (and not attached):
+ [1] utf8_1.2.4          generics_0.1.3      xml2_1.3.6         
+ [4] jpeg_0.1-10         stringi_1.8.4       hms_1.1.3          
+ [7] digest_0.6.33       magrittr_2.0.3      RColorBrewer_1.1-3 
+[10] evaluate_0.23       grid_4.5.0          timechange_0.2.0   
+[13] fastmap_1.2.0       blob_1.2.4          plyr_1.8.9         
+[16] jsonlite_1.8.8      processx_3.8.3      chromote_0.1.2     
+[19] RPostgres_1.4.6     DBI_1.2.1           ps_1.7.5           
+[22] promises_1.2.1      httr_1.4.7          rvest_1.0.4        
+[25] purrr_1.0.2         fansi_1.0.6         selectr_0.4-2      
+[28] viridisLite_0.4.2   scales_1.3.0        codetools_0.2-20   
+[31] cli_3.6.3           rlang_1.1.4         dbplyr_2.5.0       
+[34] bit64_4.0.5         munsell_0.5.0       tools_4.5.0        
+[37] deldir_2.0-2        dplyr_1.1.4         interp_1.1-5       
+[40] colorspace_2.1-0    curl_5.2.3          png_0.1-8          
+[43] vctrs_0.6.5         R6_2.5.1            lifecycle_1.0.4    
+[46] lubridate_1.9.3     stringr_1.5.1       bit_4.0.5          
+[49] foreign_0.8-86      pkgconfig_2.0.3     pillar_1.9.0       
+[52] later_1.3.2         glue_1.7.0          Rcpp_1.0.12        
+[55] systemfonts_1.0.5   highr_0.10          tidyselect_1.2.1   
+[58] xfun_0.41           tibble_3.2.1        latticeExtra_0.6-30
+[61] rstudioapi_0.15.0   htmltools_0.5.7     websocket_1.4.1    
+[64] rmarkdown_2.28      svglite_2.1.3       compiler_4.5.0     
+```
+
+
 # References
 
-Laha Ale, Robert Gentleman, Teresa Filshtein Sonmez, Deepayan Sarkar,
-Christopher Endres (2024). nhanesA: achieving transparency and
-reproducibility in NHANES research. _Database_, Volume 2024, baae028,
-<https://doi.org/10.1093/database/baae028>
+* Laha Ale, Robert Gentleman, Teresa Filshtein Sonmez, Deepayan
+  Sarkar, Christopher Endres (2024). nhanesA: achieving transparency
+  and reproducibility in NHANES research. _Database_, Volume 2024,
+  baae028, <https://doi.org/10.1093/database/baae028>
 
 
