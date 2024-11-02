@@ -312,7 +312,7 @@ pubfreq0
 # Session information
 
 ```{r}
-sessionInfo()
+print(sessionInfo(), locale = FALSE)
 ```
 
 

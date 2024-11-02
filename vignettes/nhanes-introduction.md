@@ -675,7 +675,7 @@ interaction(month, year, sep = "-") FALSE TRUE
 
 
 ```r
-sessionInfo()
+print(sessionInfo(), locale = FALSE)
 ```
 
 ```
@@ -686,17 +686,6 @@ Running under: Debian GNU/Linux 12 (bookworm)
 Matrix products: default
 BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.21.so;  LAPACK version 3.11.0
 
-locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-
-time zone: Asia/Kolkata
-tzcode source: system (glibc)
-
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
@@ -704,28 +693,18 @@ other attached packages:
 [1] nhanesA_1.1.4    kableExtra_1.4.0 lattice_0.22-6   knitr_1.45      
 
 loaded via a namespace (and not attached):
- [1] utf8_1.2.4          generics_0.1.3      xml2_1.3.6         
- [4] jpeg_0.1-10         stringi_1.8.4       hms_1.1.3          
- [7] digest_0.6.33       magrittr_2.0.3      RColorBrewer_1.1-3 
-[10] evaluate_0.23       grid_4.5.0          timechange_0.2.0   
-[13] fastmap_1.2.0       blob_1.2.4          plyr_1.8.9         
-[16] jsonlite_1.8.8      processx_3.8.3      chromote_0.1.2     
-[19] RPostgres_1.4.6     DBI_1.2.1           ps_1.7.5           
-[22] promises_1.2.1      httr_1.4.7          rvest_1.0.4        
-[25] purrr_1.0.2         fansi_1.0.6         selectr_0.4-2      
-[28] viridisLite_0.4.2   scales_1.3.0        codetools_0.2-20   
-[31] cli_3.6.3           rlang_1.1.4         dbplyr_2.5.0       
-[34] bit64_4.0.5         munsell_0.5.0       tools_4.5.0        
-[37] deldir_2.0-2        dplyr_1.1.4         interp_1.1-5       
-[40] colorspace_2.1-0    curl_5.2.3          png_0.1-8          
-[43] vctrs_0.6.5         R6_2.5.1            lifecycle_1.0.4    
-[46] lubridate_1.9.3     stringr_1.5.1       bit_4.0.5          
-[49] foreign_0.8-86      pkgconfig_2.0.3     pillar_1.9.0       
-[52] later_1.3.2         glue_1.7.0          Rcpp_1.0.12        
-[55] systemfonts_1.0.5   highr_0.10          tidyselect_1.2.1   
-[58] xfun_0.41           tibble_3.2.1        latticeExtra_0.6-30
-[61] rstudioapi_0.15.0   htmltools_0.5.7     websocket_1.4.1    
-[64] rmarkdown_2.28      svglite_2.1.3       compiler_4.5.0     
+ [1] bit_4.0.5         jsonlite_1.8.8    compiler_4.5.0    promises_1.2.1   
+ [5] Rcpp_1.0.12       blob_1.2.4        xml2_1.3.6        stringr_1.5.1    
+ [9] later_1.3.2       systemfonts_1.0.5 scales_1.3.0      fastmap_1.2.0    
+[13] R6_2.5.1          plyr_1.8.9        generics_0.1.3    munsell_0.5.0    
+[17] lubridate_1.9.3   DBI_1.2.1         svglite_2.1.3     rlang_1.1.4      
+[21] websocket_1.4.1   stringi_1.8.4     xfun_0.41         bit64_4.0.5      
+[25] timechange_0.2.0  viridisLite_0.4.2 cli_3.6.3         magrittr_2.0.3   
+[29] RPostgres_1.4.6   ps_1.7.5          digest_0.6.33     rvest_1.0.4      
+[33] grid_4.5.0        processx_3.8.3    rstudioapi_0.15.0 hms_1.1.3        
+[37] lifecycle_1.0.4   chromote_0.1.2    vctrs_0.6.5       evaluate_0.23    
+[41] glue_1.7.0        colorspace_2.1-0  foreign_0.8-86    rmarkdown_2.28   
+[45] httr_1.4.7        pkgconfig_2.0.3   tools_4.5.0       htmltools_0.5.7  
 ```
 
 

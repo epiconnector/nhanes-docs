@@ -1,14 +1,4 @@
 
-.inner
-{
-    width: 1000px; /* default is 940px*/
-}
-#main-content
-{
-    width: 780px; /* default is 690px*/
-}
-
-
 header h1
 {
     font-size: 40px;
@@ -29,8 +19,6 @@ pre.highlight
     font-size: 90%;
 }
 
-h3 { font-style: italic; }
-
 /* customize prism/coy style color  */
 
 pre[class*=language-r]
@@ -48,14 +36,5 @@ pre[class*=language-r]>code
 pre[class*=language-r]:before { content: none; }
 pre[class*=language-r]:after { content: none; }
 
-
-
-
-/* pre[class*=language-r] */
-/* { */
-/*     border-left: 10px solid rgb(210, 78, 107); */
-/*     box-shadow: -1px 0 0 0 #ad182d, 0 0 0 1px #dfdfdf; */
-/*     font-family: 'Fira Code', Courier; font-size: 16px; */
-/* } */
 
 
