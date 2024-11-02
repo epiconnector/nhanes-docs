@@ -1,4 +1,5 @@
 ---
+title: Understanding and Analyzing NHANES Data
 ---
 
 # Documentation
