@@ -203,7 +203,7 @@ analysts who are comfortable with R as a data analysis
 platform. Briefly, 
 
 - The [__cachehttp__](https://github.com/ccb-hms/cachehttp) package
-  enables local cacheing of NHANES data and documentation files that
+  enables local caching of NHANES data and documentation files that
   are only re-downloaded if they have been updated.
 
 - The [nhanes-snapshot](https://github.com/deepayan/nhanes-snapshot)

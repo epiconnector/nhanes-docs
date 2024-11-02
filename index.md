@@ -4,11 +4,13 @@ title: Understanding and Analyzing NHANES Data
 
 # Documentation
 
-- [Quick Start](vignettes/quick_start.html)
-
 - [Introduction](vignettes/nhanes-introduction.html)
 
 - [Accessing NHANES Data Locally](vignettes/nhanes-local.html)
+
+# TODO
+
+- [Quick Start](vignettes/quick_start.html)
 
 - [Workflows enabled by docker](vignettes/docker-examples.html)
 
