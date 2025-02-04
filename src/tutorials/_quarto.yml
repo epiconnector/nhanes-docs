@@ -1,0 +1,25 @@
+project:
+  type: website
+
+website:
+  title: "NHANES Tutorials"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: nhanes-introduction.qmd
+        text: Introduction
+      - href: nhanes-local.qmd
+        text: Local Data
+      - about.qmd
+
+format:
+  html:
+    theme:
+      light: spacelab
+      dark: solar
+    css: styles.css
+    toc: true
+
+
+

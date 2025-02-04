@@ -1,0 +1,60 @@
+---
+title: "NHANES Tutorials"
+---
+
+This series of tutorials are intended to introduce the NHANES
+Epiconnector project to data analysts and students working with
+NHANES data.
+
+[NHANES](https://www.cdc.gov/nchs/nhanes/about_nhanes.htm) is an
+ongoing Health and Nutrition survey conducted by the United States
+CDC. Most individual-level data from the survey are publicly available, making it a rich
+resource both for epidemiology research and education.
+
+NHANES is a complex survey that uses multi-stage sampling and
+intentionally oversamples certain population subgroups. This makes
+analysis of NHANES data somewhat nontrivial: Naive statistical
+estimates such as the sample mean and regression coefficients will be
+biased for their population counterparts. Even though this can be
+resolved by using the selection weights provided by CDC, naive
+estimators of the _standard error_ will still be biased unless one
+takes into account clusters and PSUs used in the sampling
+design.
+
+Another common issue one needs to account for is related to
+questionnaire administration and data missingness: Question B may be
+skipped depending on the answer to question A, but this information is
+_not_ recorded in the response to question B, except to say that the
+response is missing. To distinguish such missingness from genuine
+missingness, one needs to understand the flow of the questionnaire.
+
+Another set of challenges arise when we wish to combine data across
+NHANES cycles. Combining data across cycles gives a larger sample
+size, which naturally improves inference. However, not all information
+is collected in all cycles, and sometimes the specific details of what
+information is collected and where it is available changes.
+
+The main challenge for analysts and students new to NHANES data is
+navigating how the data and documentation can be accessed. The CDC
+distributes these from their website, using the SAS transport (XPT)
+format for coded data, and HTML files for documentation. These are
+both non-standard formats for most modern data analysis tools, and
+some preliminary work is required to process these inputs and extract
+usable data.
+
+The tutorials below try to address these issues systematically, using
+an R based workflow. They are meant for users comfortable with R but
+new to NHANES data analysis, as well as those interested in
+alternative workflows.
+
+
+# Tutorials
+
+- [Introduction](nhanes-introduction.html) --- A brief introduction to
+  the NHANES project and how it makes data and documentation available
+  to the public.
+
+- [Accessing NHANES Data Locally](nhanes-local.html) --- R
+  based tools that make it possible to access NHANES data locally,
+  reducing the overhead of downloads.
+

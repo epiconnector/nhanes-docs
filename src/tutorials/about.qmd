@@ -1,0 +1,19 @@
+---
+title: "About"
+---
+
+These tutorials are part of the Epiconnector project, which aims to
+develop and share open source software that enables analysis of
+complex epidemiological data, with an emphasis on ease of analysis and
+reproducible research.
+
+See [here](https://epiconnector.github.io/) for more details.
+
+# People
+
+* Robert Gentleman
+
+* Laha Ale
+
+* Deepayan Sarkar
+
