@@ -1,0 +1,26 @@
+---
+title: "Distribution of BMI over time"
+---
+
+```{r, include = FALSE}
+library(knitr)
+opts_chunk$set(comment = "", warning = TRUE, message = TRUE, prompt = FALSE,
+               fig.path = "figures/bmi-cycle-",
+               out.width = "100%",
+               fig.width = 12, fig.height = 8,
+               dev = "svglite", dev.args = list(pointsize = 12))
+options(warnPartialMatchDollar = FALSE, width = 90)
+library(lattice)
+library(kableExtra)
+```
+
+NHANES is not a longitudinal study; that is, it does not follow participants over time. Rather, the data collected in any NHANES cycle can be viewed as a snapshot of the US population from the period corresponding to that cycle. Analyses that combine data across cycles typically assume that the underlying population characteristics have not changed across the cycles being combined.
+
+However, as NHANES has now collected data over more than two decades, it may also contain evidence of characteristics that _have_ changed over time. In this analysis, we consider a specific question: whether the distribution of BMI, a standard indicator of obesity, has changed across cycles. We ask this question separately for various ethnicities and genders, as BMI is known to vary substantially across population subgroups. As an illustration of best practices, we use methods from the __survey__ package which take into account the complex sample selection design of NHANES.
+
+## BMI by age
+
+We first consider how the average BMI changes with age in a particular cycle.
+
+
+
