@@ -14,13 +14,63 @@ library(lattice)
 library(kableExtra)
 ```
 
-NHANES is not a longitudinal study; that is, it does not follow participants over time. Rather, the data collected in any NHANES cycle can be viewed as a snapshot of the US population from the period corresponding to that cycle. Analyses that combine data across cycles typically assume that the underlying population characteristics have not changed across the cycles being combined.
+NHANES is not a longitudinal study; that is, it does not follow
+participants over time. Rather, the data collected in any NHANES cycle
+can be viewed as a snapshot of the US population from the period
+corresponding to that cycle. Analyses that combine data across cycles
+typically assume that the underlying population characteristics have
+not changed across the cycles being combined.
 
-However, as NHANES has now collected data over more than two decades, it may also contain evidence of characteristics that _have_ changed over time. In this analysis, we consider a specific question: whether the distribution of BMI, a standard indicator of obesity, has changed across cycles. We ask this question separately for various ethnicities and genders, as BMI is known to vary substantially across population subgroups. As an illustration of best practices, we use methods from the __survey__ package which take into account the complex sample selection design of NHANES.
+However, as NHANES has now collected data over more than two decades,
+it may also contain evidence of characteristics that _have_ changed
+over time. In this analysis, we consider a specific question: whether
+the distribution of BMI, a standard indicator of obesity, has changed
+across cycles. We ask this question separately for various ethnicities
+and genders, as BMI is known to vary substantially across population
+subgroups. As an illustration of best practices, we use methods from
+the __survey__ package which take into account the complex sample
+selection design of NHANES.
+
+## Relevant variables
+
+To identify variables that contain information about BMI and the
+NHANES tables they are available in, we can use the `nhanesSearch()`
+function in the __nhanesA__ package.
+
+```{r}
+library(nhanesA)
+nhanesOptions(log.access = TRUE)
+nhanesSearch("body mass index")
+```
+
+These results tell us that BMI measurements are available as the
+`BMXBMI` variable in the `BMX` tables. For any reasonable analysis, we
+will need to combine these at least with demographic information
+available in the `DEMO` tables.
+
 
 ## BMI by age
 
-We first consider how the average BMI changes with age in a particular cycle.
+To compare the distribution of BMI across cycles, we need to first
+understand the factors that affect its distribution within a
+cycle. Natural covariates are gender and ethnicity, and possibly
+age. To understand the dependence on age, we choose a particular
+demographic subgroup (white females) from a particular cycle, and plot
+BMI vs age.
+
+```{r}
+library(dplyr)
+library(lattice)
+bmdata <-
+    left_join(nhanes("DEMO_C", translated = TRUE),
+              nhanes("BMX_C", translated = TRUE),
+              by = "SEQN")
+bmi_white_male <-
+    subset(bmdata, RIDAGEYR >= 20 & RIDAGEYR <= 75 &
+                   RIDRETH1 == "Non-Hispanic White" & RIAGENDR == "Male")
+xyplot(bmi_white_male, BMXBMI ~ RIDAGEYR, grid = TRUE, smooth = "loess")
+```
+
 
 
 

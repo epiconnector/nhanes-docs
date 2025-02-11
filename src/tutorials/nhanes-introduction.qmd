@@ -164,7 +164,7 @@ meaningful values using the corresponding codebook.
 
 ```{r}
 demo_c <- nhanes("DEMO_C", translated = TRUE)
-str(demo_c[1:10])
+DT::datatable(demo_c)
 ```
 
 Further analysis can be performed on these resulting datasets which

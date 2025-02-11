@@ -11,6 +11,8 @@ website:
         text: Introduction
       - href: nhanes-local.qmd
         text: Local Data
+      - href: bmi-over-cycles.qmd
+        text: BMI Over Time
       - about.qmd
 
 format:
