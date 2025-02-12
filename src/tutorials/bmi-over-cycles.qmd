@@ -10,7 +10,6 @@ opts_chunk$set(comment = "", warning = TRUE, message = TRUE, prompt = FALSE,
                fig.width = 12, fig.height = 8,
                dev = "svglite", dev.args = list(pointsize = 12))
 options(warnPartialMatchDollar = FALSE, width = 90)
-library(lattice)
 library(kableExtra)
 ```
 
@@ -59,18 +58,182 @@ demographic subgroup (white females) from a particular cycle, and plot
 BMI vs age.
 
 ```{r}
+#| warning: false
 library(dplyr)
 library(lattice)
+library(latticeExtra)
 bmdata <-
     left_join(nhanes("DEMO_C", translated = TRUE),
               nhanes("BMX_C", translated = TRUE),
-              by = "SEQN")
-bmi_white_male <-
-    subset(bmdata, RIDAGEYR >= 20 & RIDAGEYR <= 75 &
-                   RIDRETH1 == "Non-Hispanic White" & RIAGENDR == "Male")
-xyplot(bmi_white_male, BMXBMI ~ RIDAGEYR, grid = TRUE, smooth = "loess")
+              by = "SEQN") |>
+    subset(RIDAGEYR > 20 & RIDAGEYR < 75)
+bmi_white_female <-
+    subset(bmdata, RIDRETH1 == "Non-Hispanic White" & RIAGENDR == "Female")
+xyplot(bmi_white_female, BMXBMI ~ RIDAGEYR, grid = TRUE, smooth = "loess")
 ```
 
 
+The smooth line is a LOESS line giving a nonparametric estimator of
+the average BMI as a function of age for this population
+subgroup. Unfortunately, the data shown in this figure are not an
+i.i.d. sample from the population, and so the estimated smooth may be
+biased and misleading. To take the complex survey design on NHANES
+into account, we can use tools in the __survey__ package, which
+implements variants of many standard statistical analysis tools
+appropriate for survey data.
+
+The __survey__ package does not implement a survey variant of LOESS,
+although it does implement local polynomial smoothing (see `?svysmooth). We
+will instead use a parametric variant that supports "non-linear" mean
+functions _via_ basis splines. Before doing this, we first need to set
+up a survey design object with suitable weights, id, and strata
+information.
+
+```{r}
+#| message: false
+library(survey)
+library(splines)
+design <- svydesign(id = ~ SDMVPSU, strata = ~ SDMVSTRA, weights = ~ WTMEC2YR,
+                    data = bmdata,
+                    nest = TRUE)
+ns_age <- function(x) splines::ns(x, knots = seq(30, 65, length = 2),
+                                 Boundary.knots = c(21, 74))
+fm <- svyglm(BMXBMI ~ ns_age(RIDAGEYR), design = design,
+             subset = RIDRETH1 == "Non-Hispanic White" & RIAGENDR == "Female")
+fm
+```
+
+This gives a different smooth that is appropriately adjusted for unequal survey weights.
+
+```{r}
+xyplot(bmdata, BMXBMI ~ RIDAGEYR, grid = TRUE,
+       subset = RIDRETH1 == "Non-Hispanic White" & RIAGENDR == "Female") + 
+    xyplot(predict(fm, newdata = list(RIDAGEYR = x)) ~ x,
+           data = data.frame(x = 20:75), type = "l")
+```
+
+This smooth represents an estimate of the expected BMI as a function
+of age for white females. What we are really interested in is how this
+function changes over time, that is across cycles, for this and other
+population subgroups.
+
+To do this, we first obtain the survey design objects for each cycle,
+restricting our attention to (non-Hispanic) white and black adults.
+
+```{r}
+shortCycle <- function(SDDSRVYR)
+{
+    cycle <- substring(SDDSRVYR, 8, 16)
+    cycle[grepl("August", cycle)] <- "2021-2023"
+    cycle
+}
+makeDesign <- function(demo_table, bmx_table)
+{
+    data <-
+        left_join(nhanes(demo_table, translated = TRUE),
+                  nhanes(bmx_table, translated = TRUE),
+                  by = "SEQN")
+    data <- within(data, cycle <- shortCycle(SDDSRVYR))
+    if (anyNA(data$WTMEC2YR)) warning("dropping rows with missing exam weights (WTMEC2YR) in ", demo_table)
+    data <- subset(data, is.finite(WTMEC2YR))
+    design <- svydesign(id = ~ SDMVPSU, strata = ~ SDMVSTRA, weights = ~ WTMEC2YR,
+                        data = data,
+                        nest = TRUE)
+    subset(design, is.finite(BMXBMI) &
+                   RIDAGEYR > 20 & RIDAGEYR < 75 &
+                   RIDRETH1 %in% c("Non-Hispanic Black", "Non-Hispanic White"))
+}
+bmx_tables <- c("BMX", "BMX_B", "BMX_C", "BMX_D", "BMX_E", "BMX_F", "BMX_G", "BMX_H", "BMX_I", "BMX_J", "BMX_L")
+demo_tables <- c("DEMO", "DEMO_B", "DEMO_C", "DEMO_D", "DEMO_E", "DEMO_F", "DEMO_G", "DEMO_H", "DEMO_I", "DEMO_J", "DEMO_L")
+all_designs <- mapply(makeDesign, demo_tables, bmx_tables, SIMPLIFY = FALSE)
+```
+
+Next, we repeat the smoothing computation for each cycle, for four population subgroups.
+
+```{r}
+g <- expand.grid(cycle = names(all_designs),
+                 gender = c("Female", "Male"),
+                 ethnicity = c("Non-Hispanic Black", "Non-Hispanic White"),
+                 KEEP.OUT.ATTRS = FALSE)
+smooth  <- vector(mode = "list", length = nrow(g))
+for (i in seq_len(nrow(g))) {
+    fm <- svyglm(BMXBMI ~ ns_age(RIDAGEYR),
+                 design = all_designs[[ g$cycle[i] ]],
+                 subset = RIDRETH1 == g$ethnicity[i] & RIAGENDR == g$gender[i])
+    smooth[[i]] <-
+        data.frame(cycle = g$cycle[i],
+                   ethnicity = g$ethnicity[i],
+                   gender = g$gender[i],
+                   Age = 20:75,
+                   AvgBMI = predict(fm, newdata = list(RIDAGEYR = 20:75),
+                                    type = "response") |> as.numeric())
+}
+smoothDF <- do.call(rbind, smooth)
+```
+
+The resulting smooths can be compared using the following plot.
+
+```{r}
+xyplot(smoothDF, AvgBMI ~ Age | gender + ethnicity, type = "l", groups = cycle,
+       grid = TRUE, auto.key = TRUE)
+```
+
+Although it is not straightforward to interpret this plot, it is clear
+that average BMI tends to initially increase with age, after which it
+tends to stabilize. For this reason, we choose to consider only a
+middle age group, namely, adults between ages 40--59.
+
+
+## Average BMI in 40--59 year olds
+
+Once we decide on a specific age group to consider, we can ignore the
+dependence on age and simply compare the average BMI across cycles for
+various population subgroups. Of course, the estimated average BMI
+values are not of much use unless we also calculate standard errors or
+confidence intervals, which are nontrivial to compute. For this, we
+again use the __survey__ package, and specifically its `svymean()`
+function, for which the associated confidence intervals can be easily
+obtained.
+
+As the BMI values are somewhat right-skewed, we calculate the average
+and confidence interval for log-BMI, and transform it back to the BMI
+scale before plotting.
+
+```{r}
+unrowname <- function(d) { rownames(d) <- NULL; d }
+estMean <- function(design, what, groups, ...)
+{
+    svyby(what, groups,
+          design = subset(design, RIDAGEYR >= 40 & RIDAGEYR <= 59),
+          svymean, ...) |> unrowname()
+}
+CI <- 
+    lapply(all_designs, 
+           estMean,
+           ~ log(BMXBMI),
+           ~ cycle + RIDRETH1 + RIAGENDR,
+           vartype = "ci") |> do.call(what = rbind) |> unrowname()
+## transform back to BMI scale
+CI <- within(CI,
+{
+    estBMI <- exp(`log(BMXBMI)`)
+    LCL <- exp(ci_l)
+    UCL <- exp(ci_u)
+})
+```
+
+If we now plot the confidence intervals across cycles, we see that
+although successive confidence intervals are mostly overlapping, there
+is a distinct general trend of increasing average BMI values over
+time.
+
+```{r}
+segplot(factor(cycle) ~ LCL + UCL | interaction(RIAGENDR, RIDRETH1),
+        data = CI, # level = estimate,
+        draw.bands = FALSE, lwd = 2, horizontal = FALSE,
+        ylab = "95% Confidence Intervals for Average (log) BMI \n (for Age Group 40-59 years)",
+        scales = list(x = list(rot = 90)),
+        centers = estBMI) + layer_(panel.grid(v = -1, h = 0))
+```
 
 
