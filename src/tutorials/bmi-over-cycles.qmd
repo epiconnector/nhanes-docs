@@ -69,9 +69,12 @@ bmdata <-
     subset(RIDAGEYR > 20 & RIDAGEYR < 75)
 bmi_white_female <-
     subset(bmdata, RIDRETH1 == "Non-Hispanic White" & RIAGENDR == "Female")
-xyplot(bmi_white_female, BMXBMI ~ RIDAGEYR, grid = TRUE, smooth = "loess")
 ```
 
+```{r}
+#| label: fig-age-loess
+xyplot(bmi_white_female, BMXBMI ~ RIDAGEYR, grid = TRUE, smooth = "loess")
+```
 
 The smooth line is a LOESS line giving a nonparametric estimator of
 the average BMI as a function of age for this population
@@ -106,6 +109,7 @@ fm
 This gives a different smooth that is appropriately adjusted for unequal survey weights.
 
 ```{r}
+#| label: fig-age-ns
 xyplot(bmdata, BMXBMI ~ RIDAGEYR, grid = TRUE,
        subset = RIDRETH1 == "Non-Hispanic White" & RIAGENDR == "Female") + 
     xyplot(predict(fm, newdata = list(RIDAGEYR = x)) ~ x,
@@ -174,6 +178,7 @@ smoothDF <- do.call(rbind, smooth)
 The resulting smooths can be compared using the following plot.
 
 ```{r}
+#| label: fig-bmiage-smooth
 xyplot(smoothDF, AvgBMI ~ Age | gender + ethnicity, type = "l", groups = cycle,
        grid = TRUE, auto.key = TRUE)
 ```
@@ -228,6 +233,7 @@ is a distinct general trend of increasing average BMI values over
 time.
 
 ```{r}
+#| label: fig-ciplot
 segplot(factor(cycle) ~ LCL + UCL | interaction(RIAGENDR, RIDRETH1),
         data = CI, # level = estimate,
         draw.bands = FALSE, lwd = 2, horizontal = FALSE,
