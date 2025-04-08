@@ -2,11 +2,18 @@
 title: Understanding and Analyzing NHANES Data
 ---
 
-# Documentation
+# [Tutorials](tutorials/index.html)
 
-- [Introduction](vignettes/nhanes-introduction.html)
+- [Introduction](tutorials/nhanes-introduction.html)
 
-- [Accessing NHANES Data Locally](vignettes/nhanes-local.html)
+- [Accessing NHANES Data Locally](tutorials/nhanes-local.html)
+
+- [Distribution of BMI over time](tutorials/bmi-over-cycles.html)
+
+- [Skipping of Questions in NHANES](tutorials/variable-skipping.html)
+
+
+<!-- 
 
 # TODO
 
@@ -46,3 +53,4 @@ title: Understanding and Analyzing NHANES Data
 
 - [Codebook Inconsistencies](vignettes/diagnostics-codebook.html)
 
+-->

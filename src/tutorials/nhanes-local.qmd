@@ -1,8 +1,8 @@
 ---
 layout: default
 title: "Accessing NHANES data locally"
-editor_options: 
-  chunk_output_type: console
+execute:
+  cache: true
 ---
 
 ```{r, include = FALSE}
@@ -44,13 +44,13 @@ docker instance. Once the docker container is up and running, one can
 visit <http://localhost:8787/> to get access to an RStudio Server
 instance.
 
-![](screenshots/rstudio-login-screen.png)
+![](screenshots/rstudio-login-screen.png){.lightbox}
 
 After logging in using the credentials provided when initiating the
 docker container, the user gets access to an RStudio session where the
 __nhanesA__ package can be used to access NHANES resources.
 
-![](screenshots/rstudio-nhanes.png)
+![](screenshots/rstudio-nhanes.png){.lightbox}
 
 From the user's perspective, the experience should be largely
 identical to the default usage mode of __nhanesA__, except that the

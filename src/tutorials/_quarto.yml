@@ -13,6 +13,8 @@ website:
         text: Local Data
       - href: bmi-over-cycles.qmd
         text: BMI Over Time
+      - href: variable-skipping.qmd
+        text: Variable Skipping
       - about.qmd
 
 format:
@@ -22,6 +24,6 @@ format:
       dark: solar
     css: styles.css
     toc: true
-
-
-
+    fig-format: svg
+    fig-width: 12
+    fig-height: 8

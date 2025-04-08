@@ -75,6 +75,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-de4de07f82120c2cab44c9d2883d6f16.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-fc69c27516b785ffb5db61c6a6e66aa6.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -141,6 +144,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">BMI Over Time</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./variable-skipping.html"> 
+<span class="menu-text">Variable Skipping</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -164,6 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#relevant-variables" id="toc-relevant-variables" class="nav-link active" data-scroll-target="#relevant-variables">Relevant variables</a></li>
   <li><a href="#bmi-by-age" id="toc-bmi-by-age" class="nav-link" data-scroll-target="#bmi-by-age">BMI by age</a></li>
   <li><a href="#average-bmi-in-4059-year-olds" id="toc-average-bmi-in-4059-year-olds" class="nav-link" data-scroll-target="#average-bmi-in-4059-year-olds">Average BMI in 40–59 year olds</a></li>
+  <li><a href="#session-information" id="toc-session-information" class="nav-link" data-scroll-target="#session-information">Session information</a></li>
   </ul>
 </nav>
     </div>
@@ -200,21 +208,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nhanesSearch</span>(<span class="st">"body mass index"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 7
-   Variable.Name Variable.Description      Data.File.Name Data.File.Description Begin.Year
-   &lt;chr&gt;         &lt;chr&gt;                     &lt;chr&gt;          &lt;chr&gt;                      &lt;int&gt;
- 1 BMXBMI        Body Mass Index (kg/m**2) BMX            Body Measures               1999
- 2 BMXBMI        Body Mass Index (kg/m**2) BMX_B          Body Measures               2001
- 3 BMXBMI        Body Mass Index (kg/m**2) BMX_C          Body Measures               2003
- 4 BMXBMI        Body Mass Index (kg/m**2) BMX_D          Body Measures               2005
- 5 BMXBMI        Body Mass Index (kg/m**2) BMX_E          Body Measures               2007
- 6 BMXBMI        Body Mass Index (kg/m**2) BMX_F          Body Measures               2009
- 7 BMXBMI        Body Mass Index (kg/m**2) BMX_G          Body Measures               2011
- 8 BMXBMI        Body Mass Index (kg/m**2) BMX_H          Body Measures               2013
- 9 BMXBMI        Body Mass Index (kg/m**2) BMX_I          Body Measures               2015
-10 BMXBMI        Body Mass Index (kg/m**2) BMX_J          Body Measures               2017
-11 BMXBMI        Body Mass Index (kg/m**2) P_BMX          Body Measures               2017
-12 BMXBMI        Body Mass Index (kg/m**2) BMX_L          Body Measures               2021
-# ℹ 2 more variables: EndYear &lt;int&gt;, Component &lt;chr&gt;</code></pre>
+   Variable.Name Variable.Description      Data.File.Name Data.File.Description
+   &lt;chr&gt;         &lt;chr&gt;                     &lt;chr&gt;          &lt;chr&gt;                
+ 1 BMXBMI        Body Mass Index (kg/m**2) BMX            Body Measures        
+ 2 BMXBMI        Body Mass Index (kg/m**2) BMX_B          Body Measures        
+ 3 BMXBMI        Body Mass Index (kg/m**2) BMX_C          Body Measures        
+ 4 BMXBMI        Body Mass Index (kg/m**2) BMX_D          Body Measures        
+ 5 BMXBMI        Body Mass Index (kg/m**2) BMX_E          Body Measures        
+ 6 BMXBMI        Body Mass Index (kg/m**2) BMX_F          Body Measures        
+ 7 BMXBMI        Body Mass Index (kg/m**2) BMX_G          Body Measures        
+ 8 BMXBMI        Body Mass Index (kg/m**2) BMX_H          Body Measures        
+ 9 BMXBMI        Body Mass Index (kg/m**2) BMX_I          Body Measures        
+10 BMXBMI        Body Mass Index (kg/m**2) BMX_J          Body Measures        
+11 BMXBMI        Body Mass Index (kg/m**2) P_BMX          Body Measures        
+12 BMXBMI        Body Mass Index (kg/m**2) BMX_L          Body Measures        
+# ℹ 3 more variables: Begin.Year &lt;int&gt;, EndYear &lt;int&gt;, Component &lt;chr&gt;</code></pre>
 </div>
 </div>
 <p>These results tell us that BMI measurements are available as the <code>BMXBMI</code> variable in the <code>BMX</code> tables. For any reasonable analysis, we will need to combine these at least with demographic information available in the <code>DEMO</code> tables.</p>
@@ -237,10 +245,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(bmi_white_female, BMXBMI <span class="sc">~</span> RIDAGEYR, <span class="at">grid =</span> <span class="cn">TRUE</span>, <span class="at">smooth =</span> <span class="st">"loess"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-age-loess" class="quarto-float quarto-figure quarto-figure-center anchored" width="100%">
+<div id="fig-age-loess" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-age-loess-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/bmi-cycle-fig-age-loess-1.svg" id="fig-age-loess" class="img-fluid figure-img" style="width:100.0%">
+<a href="bmi-over-cycles_files/figure-html/fig-age-loess-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: "><img src="bmi-over-cycles_files/figure-html/fig-age-loess-1.svg" id="fig-age-loess" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-age-loess-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1
@@ -288,10 +296,10 @@ Residual Deviance: 50990    AIC: 6932</code></pre>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xyplot</span>(<span class="fu">predict</span>(fm, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">RIDAGEYR =</span> x)) <span class="sc">~</span> x,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">20</span><span class="sc">:</span><span class="dv">75</span>), <span class="at">type =</span> <span class="st">"l"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-age-ns" class="quarto-float quarto-figure quarto-figure-center anchored" width="100%">
+<div id="fig-age-ns" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-age-ns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/bmi-cycle-fig-age-ns-1.svg" id="fig-age-ns" class="img-fluid figure-img" style="width:100.0%">
+<a href="bmi-over-cycles_files/figure-html/fig-age-ns-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: "><img src="bmi-over-cycles_files/figure-html/fig-age-ns-1.svg" id="fig-age-ns" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-age-ns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2
@@ -329,20 +337,20 @@ Figure&nbsp;2
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>demo_tables <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DEMO"</span>, <span class="st">"DEMO_B"</span>, <span class="st">"DEMO_C"</span>, <span class="st">"DEMO_D"</span>, <span class="st">"DEMO_E"</span>, <span class="st">"DEMO_F"</span>, <span class="st">"DEMO_G"</span>, <span class="st">"DEMO_H"</span>, <span class="st">"DEMO_I"</span>, <span class="st">"DEMO_J"</span>, <span class="st">"DEMO_L"</span>)</span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>all_designs <span class="ot">&lt;-</span> <span class="fu">mapply</span>(makeDesign, demo_tables, bmx_tables, <span class="at">SIMPLIFY =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in (function (demo_table, bmx_table) : dropping rows with missing exam weights
-(WTMEC2YR) in DEMO_H</code></pre>
+<pre><code>Warning in (function (demo_table, bmx_table) : dropping rows with missing exam
+weights (WTMEC2YR) in DEMO_H</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in (function (demo_table, bmx_table) : dropping rows with missing exam weights
-(WTMEC2YR) in DEMO_I</code></pre>
+<pre><code>Warning in (function (demo_table, bmx_table) : dropping rows with missing exam
+weights (WTMEC2YR) in DEMO_I</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in (function (demo_table, bmx_table) : dropping rows with missing exam weights
-(WTMEC2YR) in DEMO_J</code></pre>
+<pre><code>Warning in (function (demo_table, bmx_table) : dropping rows with missing exam
+weights (WTMEC2YR) in DEMO_J</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in (function (demo_table, bmx_table) : dropping rows with missing exam weights
-(WTMEC2YR) in DEMO_L</code></pre>
+<pre><code>Warning in (function (demo_table, bmx_table) : dropping rows with missing exam
+weights (WTMEC2YR) in DEMO_L</code></pre>
 </div>
 </div>
 <p>Next, we repeat the smoothing computation for each cycle, for four population subgroups.</p>
@@ -371,10 +379,10 @@ Figure&nbsp;2
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(smoothDF, AvgBMI <span class="sc">~</span> Age <span class="sc">|</span> gender <span class="sc">+</span> ethnicity, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">groups =</span> cycle,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">grid =</span> <span class="cn">TRUE</span>, <span class="at">auto.key =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bmiage-smooth" class="quarto-float quarto-figure quarto-figure-center anchored" width="100%">
+<div id="fig-bmiage-smooth" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bmiage-smooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/bmi-cycle-fig-bmiage-smooth-1.svg" id="fig-bmiage-smooth" class="img-fluid figure-img" style="width:100.0%">
+<a href="bmi-over-cycles_files/figure-html/fig-bmiage-smooth-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: "><img src="bmi-over-cycles_files/figure-html/fig-bmiage-smooth-1.svg" id="fig-bmiage-smooth" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bmiage-smooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3
@@ -420,16 +428,57 @@ Figure&nbsp;3
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">scales =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="at">rot =</span> <span class="dv">90</span>)),</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">centers =</span> estBMI) <span class="sc">+</span> <span class="fu">layer_</span>(<span class="fu">panel.grid</span>(<span class="at">v =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">h =</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-ciplot" class="quarto-float quarto-figure quarto-figure-center anchored" width="100%">
+<div id="fig-ciplot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ciplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/bmi-cycle-fig-ciplot-1.svg" id="fig-ciplot" class="img-fluid figure-img" style="width:100.0%">
+<a href="bmi-over-cycles_files/figure-html/fig-ciplot-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: "><img src="bmi-over-cycles_files/figure-html/fig-ciplot-1.svg" id="fig-ciplot" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-ciplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4
 </figcaption>
 </figure>
 </div>
+</div>
+</div>
+</section>
+<section id="session-information" class="level1">
+<h1>Session information</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sessionInfo</span>(), <span class="at">locale =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R Under development (unstable) (2025-04-06 r88113)
+Platform: x86_64-apple-darwin22.2.0
+Running under: macOS Ventura 13.1
+
+Matrix products: default
+BLAS:   /usr/local/Cellar/openblas/0.3.29/lib/libopenblasp-r0.3.29.dylib 
+LAPACK: /Users/deepayan/local/lib/R/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+attached base packages:
+[1] splines   grid      stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+[1] survey_4.1-1        survival_3.8-3      Matrix_1.7-3       
+[4] latticeExtra_0.6-30 lattice_0.22-7      dplyr_1.1.4        
+[7] nhanesA_1.3         kableExtra_1.4.0    knitr_1.43         
+
+loaded via a namespace (and not attached):
+ [1] utf8_1.1.4         generics_0.1.3     xml2_1.3.2         jpeg_0.1-10       
+ [5] stringi_1.5.3      hms_1.1.3          digest_0.6.34      magrittr_2.0.3    
+ [9] evaluate_0.21      timechange_0.2.0   RColorBrewer_1.1-2 fastmap_1.1.0     
+[13] blob_1.2.4         plyr_1.8.6         jsonlite_1.8.8     RPostgres_1.4.6   
+[17] DBI_1.2.2          httr_1.4.2         rvest_1.0.3        purrr_1.0.2       
+[21] viridisLite_0.4.1  scales_1.2.1       codetools_0.2-20   cli_3.6.2         
+[25] mitools_2.4        rlang_1.1.3        dbplyr_2.5.0       bit64_4.0.5       
+[29] munsell_0.5.0      withr_2.5.0        yaml_2.2.1         tools_4.6.0       
+[33] deldir_1.0-6       colorspace_2.0-0   interp_1.1-4       vctrs_0.6.5       
+[37] R6_2.5.1           png_0.1-7          lifecycle_1.0.3    lubridate_1.9.3   
+[41] stringr_1.5.1      htmlwidgets_1.5.3  bit_4.0.5          foreign_0.8-90    
+[45] pkgconfig_2.0.3    pillar_1.10.0      glue_1.6.2         Rcpp_1.0.10       
+[49] systemfonts_1.0.6  xfun_0.49          tibble_3.2.1       tidyselect_1.2.1  
+[53] rstudioapi_0.13    htmltools_0.5.7    rmarkdown_2.26     svglite_2.1.1     
+[57] compiler_4.6.0    </code></pre>
 </div>
 </div>
 
@@ -999,6 +1048,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

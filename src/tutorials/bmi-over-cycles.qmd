@@ -1,16 +1,15 @@
 ---
 title: "Distribution of BMI over time"
+lightbox: auto
+execute:
+  cache: true
 ---
 
 ```{r, include = FALSE}
 library(knitr)
 opts_chunk$set(comment = "", warning = TRUE, message = TRUE, prompt = FALSE,
                fig.path = "figures/bmi-cycle-",
-               out.width = "100%",
-               fig.width = 12, fig.height = 8,
                dev = "svglite", dev.args = list(pointsize = 12))
-options(warnPartialMatchDollar = FALSE, width = 90)
-library(kableExtra)
 ```
 
 NHANES is not a longitudinal study; that is, it does not follow
@@ -242,4 +241,10 @@ segplot(factor(cycle) ~ LCL + UCL | interaction(RIAGENDR, RIDRETH1),
         centers = estBMI) + layer_(panel.grid(v = -1, h = 0))
 ```
 
+
+# Session information
+
+```{r}
+print(sessionInfo(), locale = FALSE)
+```
 

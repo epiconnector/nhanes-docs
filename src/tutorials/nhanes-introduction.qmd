@@ -1,8 +1,7 @@
 ---
 title: "Introduction to NHANES"
-author: "Deepayan Sarkar"
-editor_options: 
-  chunk_output_type: console
+execute:
+  cache: true
 ---
 
 ```{r, include = FALSE}
@@ -10,12 +9,9 @@ library(knitr)
 opts_chunk$set(collapse = FALSE, autodep = TRUE, 
                comment = "", warning = TRUE, message = TRUE, prompt = FALSE,
                fig.path = "figures/nhanes-intro-",
-               out.width = "100%",
-               fig.width = 12, fig.height = 8,
                dev = "svglite", dev.args = list(pointsize = 12))
 options(warnPartialMatchDollar = FALSE, width = 80)
 library(lattice)
-library(kableExtra)
 ```
 
 The [National Health and Nutrition Examination

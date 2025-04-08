@@ -75,6 +75,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-de4de07f82120c2cab44c9d2883d6f16.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-fc69c27516b785ffb5db61c6a6e66aa6.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -141,6 +144,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">BMI Over Time</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./variable-skipping.html"> 
+<span class="menu-text">Variable Skipping</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -204,9 +211,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="work-in-a-docker-container" class="level2">
 <h2 class="anchored" data-anchor-id="work-in-a-docker-container">Work in a Docker container</h2>
 <p>Functions in the <strong>nhanesA</strong> package can obtain (most) data from a suitably configured SQL database instead of accessing the CDC website directly. The easiest way to obtain such a database is <em>via</em> a Docker image as described <a href="https://github.com/deepayan/nhanes-postgres">here</a>. This docker image includes versions of R and RStudio, and is configured in a way that causes <strong>nhanesA</strong> to use the database when it is run inside the docker instance. Once the docker container is up and running, one can visit <a href="http://localhost:8787/" class="uri">http://localhost:8787/</a> to get access to an RStudio Server instance.</p>
-<p><img src="screenshots/rstudio-login-screen.png" class="img-fluid"></p>
+<p><a href="screenshots/rstudio-login-screen.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="screenshots/rstudio-login-screen.png" class="img-fluid"></a></p>
 <p>After logging in using the credentials provided when initiating the docker container, the user gets access to an RStudio session where the <strong>nhanesA</strong> package can be used to access NHANES resources.</p>
-<p><img src="screenshots/rstudio-nhanes.png" class="img-fluid"></p>
+<p><a href="screenshots/rstudio-nhanes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="screenshots/rstudio-nhanes.png" class="img-fluid"></a></p>
 <p>From the user’s perspective, the experience should be largely identical to the default usage mode of <strong>nhanesA</strong>, except that the data should become available without any significant delay. The output of running <code>nhanesOptions()</code> indicates that <strong>nhanesA</strong> was able to detect a database when it was loaded.</p>
 </section>
 <section id="access-the-database-via-port-forwarding" class="level2">
@@ -235,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(demo_g_db <span class="ot">&lt;-</span> <span class="fu">nhanes</span>(<span class="st">"DEMO_G"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.486   0.083   1.397 </code></pre>
+  0.491   0.068   1.445 </code></pre>
 </div>
 </div>
 <p>Even when the database is available, it is possible to pause use of the database and revert to downloading from the CDC website by setting</p>
@@ -250,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.655   0.141   7.914 </code></pre>
+  0.621   0.087   7.368 </code></pre>
 </div>
 </div>
 <p>The two versions have minor differences: The order of rows and columns may be different, and categorical variables may be represented either as factors of character strings. However, as long as the data has not been updated on the NHANES website since it was downloaded for inclusion in the database, the contents should be identical.</p>
@@ -323,23 +330,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sessionInfo</span>(), <span class="at">locale =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>R Under development (unstable) (2025-01-11 r87563)
+<pre><code>R Under development (unstable) (2025-04-06 r88113)
 Platform: x86_64-apple-darwin22.2.0
 Running under: macOS Ventura 13.1
 
 Matrix products: default
 BLAS:   /usr/local/Cellar/openblas/0.3.29/lib/libopenblasp-r0.3.29.dylib 
-LAPACK: /Users/deepayan/local/lib/R/lib/libRlapack.dylib;  LAPACK version 3.12.0
+LAPACK: /Users/deepayan/local/lib/R/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] nhanesA_1.3      kableExtra_1.4.0 lattice_0.22-6   knitr_1.43      
+[1] nhanesA_1.3      kableExtra_1.4.0 lattice_0.22-7   knitr_1.43      
 
 loaded via a namespace (and not attached):
  [1] bit_4.0.5         jsonlite_1.8.8    selectr_0.4-2     dplyr_1.1.4      
- [5] compiler_4.5.0    tidyselect_1.2.1  Rcpp_1.0.10       xml2_1.3.2       
+ [5] compiler_4.6.0    tidyselect_1.2.1  Rcpp_1.0.10       xml2_1.3.2       
  [9] blob_1.2.4        stringr_1.5.1     systemfonts_1.0.6 scales_1.2.1     
 [13] yaml_2.2.1        fastmap_1.1.0     R6_2.5.1          plyr_1.8.6       
 [17] generics_0.1.3    curl_4.3.1        htmlwidgets_1.5.3 tibble_3.2.1     
@@ -347,10 +354,11 @@ loaded via a namespace (and not attached):
 [25] pillar_1.10.0     rlang_1.1.3       stringi_1.5.3     xfun_0.49        
 [29] bit64_4.0.5       timechange_0.2.0  viridisLite_0.4.1 cli_3.6.2        
 [33] magrittr_2.0.3    RPostgres_1.4.6   digest_0.6.34     rvest_1.0.3      
-[37] grid_4.5.0        rstudioapi_0.13   dbplyr_2.5.0      hms_1.1.3        
+[37] grid_4.6.0        rstudioapi_0.13   dbplyr_2.5.0      hms_1.1.3        
 [41] lifecycle_1.0.3   vctrs_0.6.5       evaluate_0.21     glue_1.6.2       
-[45] colorspace_2.0-0  purrr_1.0.2       foreign_0.8-85    rmarkdown_2.26   
-[49] httr_1.4.2        tools_4.5.0       pkgconfig_2.0.3   htmltools_0.5.7  </code></pre>
+[45] codetools_0.2-20  colorspace_2.0-0  purrr_1.0.2       foreign_0.8-90   
+[49] rmarkdown_2.26    httr_1.4.2        tools_4.6.0       pkgconfig_2.0.3  
+[53] htmltools_0.5.7  </code></pre>
 </div>
 </div>
 
@@ -920,6 +928,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

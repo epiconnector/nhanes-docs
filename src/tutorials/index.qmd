@@ -54,7 +54,26 @@ alternative workflows.
   the NHANES project and how it makes data and documentation available
   to the public.
 
-- [Accessing NHANES Data Locally](nhanes-local.html) --- R
-  based tools that make it possible to access NHANES data locally,
-  reducing the overhead of downloads.
+- [Accessing NHANES Data Locally](nhanes-local.html) --- This article
+  describes R based tools that make it possible to access NHANES data
+  locally, reducing the overhead of downloads.
+
+- [Distribution of BMI over time](bmi-over-cycles.html) --- Although
+  NHANES is not a longitudinal study, it represents data collected
+  over time. This analysis explores whether NHANES data can contain
+  discernible hints about population characteristics that have changed
+  substantially over the study period of continuous NHANES, using BMI
+  as an example. It illustrates the use of appropriate survey tools
+  needed to address the complex design of the NHANES survey, and
+  describes how data from multiple tables can be merged.
+  
+- [Skipping of Questions in NHANES](variable-skipping.html) --- This
+  article discusses an important aspect of the NHANES questionnaires:
+  branching or skipping, where a certain response to one question may
+  lead subsequent questions to be skipped. We describe tools to
+  identify such cases, and discuss why it is important to take
+  skipping information into account. The analysis used in the article
+  illustrates how to efficiently combine data from multiple cycles.
+
+  
 
